@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus PT HSN - Presentasi Interaktif</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .presentation-container {
+            width: 100%;
+            max-width: 1000px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+        .slide {
+            display: none;
+            padding: 40px;
+            flex-grow: 1;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .slide.active {
+            display: flex;
+            gap: 30px;
+            align-items: stretch;
+        }
+        .slide-content {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            position: relative;
+            background: #f4f4f4;
+        }
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .slide-image:hover img {
+            transform: scale(1.05);
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .step {
+            opacity: 0;
+            transform: translateX(-20px);
+            margin-top: 15px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.6;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .step.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* Specific step colors */
+        .step.warning { border-left-color: #e74c3c; background: #fdf2f1; }
+        .step.success { border-left-color: #2ecc71; background: #f2fbf5; }
+        
+        .controls {
+            padding: 20px 40px;
+            background: #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+        button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3);
+        }
+        button:hover {
+            background: #219653;
+        }
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(39, 174, 96, 0.3);
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .progress {
+            font-size: 15px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media (max-width: 768px) {
+            .slide.active {
+                flex-direction: column;
+            }
+            .slide-image {
+                min-height: 250px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+    
+    <!-- Slide 1: Profil & Konteks Bisnis -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-content">
+            <h2>1. Profil & Konteks Bisnis</h2>
+            <div class="step">
+                <strong>Identitas Perusahaan:</strong> PT Hijau Segar Nusantara (HSN) adalah perusahaan agribisnis menengah di bidang budidaya, pengolahan minim (minimal processing), dan distribusi sayuran organik[cite: 1].
+            </div>
+            <div class="step">
+                <strong>Skala Operasi:</strong> HSN bermitra dengan 45 kelompok tani di Jawa Barat serta mengoperasikan Pusat Pengolahan & Distribusi (Packhouse) di Lembang[cite: 1].
+            </div>
+            <div class="step">
+                <strong>Jalur Pemasaran:</strong> Produk didistribusikan ke 25 jaringan supermarket modern dan 40 restoran/hotel di area Jabodetabek[cite: 1].
+            </div>
+        </div>
+        <div class="slide-image">
+            <!-- Ilustrasi: Ladang sayuran hijau / Agribisnis -->
+            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80" alt="Ladang Agribisnis">
+        </div>
+    </div>
+
+    <!-- Slide 2: Akar Masalah -->
+    <div class="slide" id="slide-2">
+        <div class="slide-content">
+            <h2>2. Akar Masalah: 4 Fungsi Manajemen</h2>
+            <div class="step warning">
+                <strong>Planning:</strong> Prakiraan meleset hingga 25% akibat cuaca ekstrem di Lembang, menyebabkan pasokan tidak stabil[cite: 1].
+            </div>
+            <div class="step warning">
+                <strong>Organizing:</strong> Ketiadaan unit khusus Quality Control (QC) terpisah. Penilaian mutu ditumpuk pada Tim Gudang[cite: 1].
+            </div>
+            <div class="step warning">
+                <strong>Directing:</strong> Petani mitra kurang termotivasi menerapkan SOP pemanenan pagi hari (sebelum terik)[cite: 1].
+            </div>
+            <div class="step warning">
+                <strong>Controlling:</strong> Tingkat reject produk mencapai 18% (standar industri max 5%) dan sistem pencatatan masih manual[cite: 1].
+            </div>
+        </div>
+        <div class="slide-image">
+            <!-- Ilustrasi: Inspeksi sayuran / Quality Control -->
+            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80" alt="Inspeksi Kualitas Agribisnis">
+        </div>
+    </div>
+
+    <!-- Slide 3: Krisis & Keputusan -->
+    <div class="slide" id="slide-3">
+        <div class="slide-content">
+            <h2>3. Krisis & Pengambilan Keputusan</h2>
+            <div class="step warning">
+                <strong>Krisis Utama:</strong> 3 jaringan supermarket besar mengancam memutus kontrak akibat retur produk tinggi dan keterlambatan[cite: 1].
+            </div>
+            <div class="step">
+                <strong>Evaluasi Opsi:</strong><br>
+                - <i>Alt A:</i> Truk & cold storage (Rp850 juta)[cite: 1].<br>
+                - <i>Alt B:</i> Unit QC & insentif mutu (Rp120 juta)[cite: 1].<br>
+                - <i>Alt C:</i> Produk olahan sekunder (Zero waste)[cite: 1].
+            </div>
+            <div class="step success">
+                <strong>Solusi Terpilih:</strong> Manajemen menolak Alt A dan memilih Kombinasi Fase Bertahap (Alt B dan Alt C)[cite: 1].
+            </div>
+            <div class="step success">
+                <strong>Implementasi Fase 1:</strong> Merekrut 2 supervisor QC independen dan memberi bonus harga 15% untuk petani penyedia Grade A[cite: 1].
+            </div>
+        </div>
+        <div class="slide-image">
+            <!-- Ilustrasi: Truk Distribusi / Logistik -->
+            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" alt="Truk Distribusi Agribisnis">
+        </div>
+    </div>
+
+    <!-- Slide 4: Evaluasi Hasil -->
+    <div class="slide" id="slide-4">
+        <div class="slide-content">
+            <h2>4. Evaluasi & Hasil (Setelah 3 Bulan)</h2>
+            <div class="step success">
+                <strong>Penurunan Kerusakan:</strong> Tingkat kerusakan (reject rate) di gudang turun drastis dari 18% menjadi 4,2%[cite: 1].
+            </div>
+            <div class="step success">
+                <strong>Optimalisasi Logistik:</strong> Ketepatan waktu pengiriman (on-time delivery) meningkat dari 72% menjadi 96%[cite: 1].
+            </div>
+            <div class="step success">
+                <strong>Pemulihan Kepercayaan:</strong> Supermarket membatalkan rencana pemutus kontrak dan justru menambah pesanan 20%[cite: 1].
+            </div>
+        </div>
+        <div class="slide-image">
+            <!-- Ilustrasi: Grafik peningkatan / Keberhasilan Bisnis -->
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Grafik Kesuksesan Bisnis">
+        </div>
+    </div>
+
+    <!-- Kontrol Navigasi Interaktif -->
+    <div class="controls">
+        <button id="btn-prev" disabled>Kembali</button>
+        <span class="progress" id="progress-text">Halaman 1 / 4</span>
+        <button id="btn-next">Tampilkan Poin</button>
+    </div>
+
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const progressText = document.getElementById('progress-text');
+    
+    let currentSlide = 0;
+    
+    // Array untuk melacak status "step" yang sedang ditampilkan di tiap slide
+    let stepsRevealed = new Array(slides.length).fill(0);
+
+    function updateUI() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+
+        progressText.innerText = `Halaman ${currentSlide + 1} / ${slides.length}`;
+        
+        if (currentSlide === 0 && stepsRevealed[0] === 0) {
+            btnPrev.disabled = true;
+        } else {
+            btnPrev.disabled = false;
+        }
+
+        const currentSteps = slides[currentSlide].querySelectorAll('.step');
+        
+        if (stepsRevealed[currentSlide] < currentSteps.length) {
+            btnNext.innerText = "Tampilkan Poin";
+        } else {
+            if (currentSlide === slides.length - 1) {
+                btnNext.innerText = "Selesai";
+                btnNext.disabled = true;
+            } else {
+                btnNext.innerText = "Halaman Berikutnya";
+                btnNext.disabled = false;
+            }
+        }
+    }
+
+    btnNext.addEventListener('click', () => {
+        const currentSteps = slides[currentSlide].querySelectorAll('.step');
+        
+        if (stepsRevealed[currentSlide] < currentSteps.length) {
+            currentSteps[stepsRevealed[currentSlide]].classList.add('visible');
+            stepsRevealed[currentSlide]++;
+        } 
+        else if (currentSlide < slides.length - 1) {
+            currentSlide++;
+        }
+        updateUI();
+    });
+
+    btnPrev.addEventListener('click', () => {
+        if (stepsRevealed[currentSlide] > 0) {
+            stepsRevealed[currentSlide]--;
+            const currentSteps = slides[currentSlide].querySelectorAll('.step');
+            currentSteps[stepsRevealed[currentSlide]].classList.remove('visible');
+            btnNext.disabled = false; 
+        } 
+        else if (currentSlide > 0) {
+            currentSlide--;
+        }
+        updateUI();
+    });
+
+    // Inisialisasi awal
+    updateUI();
+</script>
+
+</body>
+</html>
