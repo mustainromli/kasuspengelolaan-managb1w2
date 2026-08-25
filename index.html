@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus PT HSN - Presentasi Interaktif</title>
+    <title>Studi Kasus PT HSN - Integrasi Subsistem & Fungsi Manajemen</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,13 +19,13 @@
         }
         .presentation-container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             overflow: hidden;
             position: relative;
-            min-height: 600px;
+            min-height: 650px;
             display: flex;
             flex-direction: column;
         }
@@ -39,6 +39,10 @@
             display: flex;
             gap: 30px;
             align-items: stretch;
+        }
+        /* Layout khusus untuk tabel yang butuh lebar penuh */
+        .slide.active.full-width {
+            display: block;
         }
         .slide-content {
             flex: 1.2;
@@ -69,7 +73,12 @@
             margin-top: 0;
             font-size: 24px;
         }
-        .step {
+        h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        /* Elemen Step biasa */
+        div.step {
             opacity: 0;
             transform: translateX(-20px);
             margin-top: 15px;
@@ -80,15 +89,53 @@
             font-size: 15px;
             line-height: 1.6;
             transition: opacity 0.5s ease, transform 0.5s ease;
+            display: none; /* Disembunyikan total sebelum aktif agar layout rapi */
         }
-        .step.visible {
+        div.step.visible {
             opacity: 1;
             transform: translateX(0);
+            display: block;
         }
-        /* Specific step colors */
-        .step.warning { border-left-color: #e74c3c; background: #fdf2f1; }
+        
+        .step.warning { border-left-color: #e67e22; background: #fdf8f5; }
         .step.success { border-left-color: #2ecc71; background: #f2fbf5; }
         
+        /* Desain Tabel Matriks */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 13.5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .matrix-table th, .matrix-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .matrix-table th {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+        .matrix-table th:first-child {
+            background-color: #27ae60;
+        }
+        /* Baris Tabel Step (Click by Click) */
+        tr.step {
+            opacity: 0;
+            visibility: collapse;
+            transition: opacity 0.6s ease;
+        }
+        tr.step.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .matrix-table tr:nth-child(even) td { background-color: #f9f9f9; }
+        .matrix-table tr:hover td { background-color: #f1f8e9; }
+
         .controls {
             padding: 20px 40px;
             background: #ecf0f1;
@@ -109,131 +156,133 @@
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3);
         }
-        button:hover {
-            background: #219653;
-        }
-        button:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(39, 174, 96, 0.3);
-        }
-        button:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-        .progress {
-            font-size: 15px;
-            color: #7f8c8d;
-            font-weight: bold;
-        }
+        button:hover { background: #219653; }
+        button:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(39, 174, 96, 0.3); }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; box-shadow: none; transform: none; }
+        .progress { font-size: 15px; color: #7f8c8d; font-weight: bold; }
 
-        /* Responsiveness for smaller screens */
-        @media (max-width: 768px) {
-            .slide.active {
-                flex-direction: column;
-            }
-            .slide-image {
-                min-height: 250px;
-            }
+        @media (max-width: 900px) {
+            .slide.active:not(.full-width) { flex-direction: column; }
+            .matrix-table { font-size: 12px; }
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="presentation-container">
     
-    <!-- Slide 1: Profil & Konteks Bisnis -->
+    <!-- Slide 1: Teori & Profil -->
     <div class="slide active" id="slide-1">
         <div class="slide-content">
-            <h2>1. Profil & Konteks Bisnis</h2>
+            <h2>1. Teori Rujukan & Profil HSN</h2>
             <div class="step">
-                <strong>Identitas Perusahaan:</strong> PT Hijau Segar Nusantara (HSN) adalah perusahaan agribisnis menengah di bidang budidaya, pengolahan minim (minimal processing), dan distribusi sayuran organik[cite: 1].
+                <strong>Kerangka Teori Terintegrasi:</strong><br>
+                - 4 Subsistem Agribisnis Terintegrasi oleh G. Kartasapoetra (1985)[cite: 2].<br>
+                - 4 Fungsi Manajemen & 6 Langkah Keputusan Manajerial oleh W.D. Downey & S.P. Erickson (1987)[cite: 2].
             </div>
             <div class="step">
-                <strong>Skala Operasi:</strong> HSN bermitra dengan 45 kelompok tani di Jawa Barat serta mengoperasikan Pusat Pengolahan & Distribusi (Packhouse) di Lembang[cite: 1].
+                <strong>Profil PT HSN:</strong> Perusahaan agribisnis di Lembang di bidang budidaya, pengolahan minim, dan distribusi sayuran organik segar (selada hidroponik, bayam jepang, brokoli, wortel)[cite: 2].
             </div>
             <div class="step">
-                <strong>Jalur Pemasaran:</strong> Produk didistribusikan ke 25 jaringan supermarket modern dan 40 restoran/hotel di area Jabodetabek[cite: 1].
+                <strong>Jaringan Kemitraan:</strong> Bekerja sama dengan 45 kelompok tani mitra[cite: 2], mendistribusikan ke 25 supermarket dan 40 restoran/hotel di Jabodetabek[cite: 2].
             </div>
         </div>
         <div class="slide-image">
-            <!-- Ilustrasi: Ladang sayuran hijau / Agribisnis -->
-            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80" alt="Ladang Agribisnis">
+            <!-- Ilustrasi: Budidaya Hidroponik / Organik -->
+            <img src="https://images.unsplash.com/photo-1558222218-b7b54eede3f3?auto=format&fit=crop&w=800&q=80" alt="Sayuran Hidroponik">
         </div>
     </div>
 
-    <!-- Slide 2: Akar Masalah -->
+    <!-- Slide 2: Empat Subsistem (Kartasapoetra) -->
     <div class="slide" id="slide-2">
         <div class="slide-content">
-            <h2>2. Akar Masalah: 4 Fungsi Manajemen</h2>
+            <h2>2. Empat Subsistem Terintegrasi (Kartasapoetra)</h2>
             <div class="step warning">
-                <strong>Planning:</strong> Prakiraan meleset hingga 25% akibat cuaca ekstrem di Lembang, menyebabkan pasokan tidak stabil[cite: 1].
+                <strong>A. Hulu (Input):</strong> Pengadaan benih tersertifikasi & nutrisi hidroponik. Keterlambatan pasokan di tahap ini langsung menunda masa tanam petani[cite: 2].
             </div>
             <div class="step warning">
-                <strong>Organizing:</strong> Ketiadaan unit khusus Quality Control (QC) terpisah. Penilaian mutu ditumpuk pada Tim Gudang[cite: 1].
+                <strong>B. On-Farm (Budidaya):</strong> Pengaturan panen pagi (sebelum terik matahari agar tidak layu). Pemanenan telat meningkatkan angka reject rate di gudang[cite: 2].
             </div>
             <div class="step warning">
-                <strong>Directing:</strong> Petani mitra kurang termotivasi menerapkan SOP pemanenan pagi hari (sebelum terik)[cite: 1].
+                <strong>C. Off-Farm (Pengolahan):</strong> Pembersihan dan pemilahan ketat (grading) di Packhouse (cold room 4°C-7°C). Pemisahan Grade A dan Grade B/C[cite: 2].
             </div>
             <div class="step warning">
-                <strong>Controlling:</strong> Tingkat reject produk mencapai 18% (standar industri max 5%) dan sistem pencatatan masih manual[cite: 1].
+                <strong>D. Hilir (Pemasaran):</strong> Distribusi menggunakan armada truk pendingin ber-sensor suhu dari Lembang ke area Jabodetabek[cite: 2].
             </div>
         </div>
         <div class="slide-image">
-            <!-- Ilustrasi: Inspeksi sayuran / Quality Control -->
-            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80" alt="Inspeksi Kualitas Agribisnis">
+            <!-- Ilustrasi: Sortir / Off-farm pengolahan -->
+            <img src="https://images.unsplash.com/photo-1595856422328-98e833f2081d?auto=format&fit=crop&w=800&q=80" alt="Sortir Sayuran">
         </div>
     </div>
 
-    <!-- Slide 3: Krisis & Keputusan -->
-    <div class="slide" id="slide-3">
-        <div class="slide-content">
-            <h2>3. Krisis & Pengambilan Keputusan</h2>
-            <div class="step warning">
-                <strong>Krisis Utama:</strong> 3 jaringan supermarket besar mengancam memutus kontrak akibat retur produk tinggi dan keterlambatan[cite: 1].
-            </div>
-            <div class="step">
-                <strong>Evaluasi Opsi:</strong><br>
-                - <i>Alt A:</i> Truk & cold storage (Rp850 juta)[cite: 1].<br>
-                - <i>Alt B:</i> Unit QC & insentif mutu (Rp120 juta)[cite: 1].<br>
-                - <i>Alt C:</i> Produk olahan sekunder (Zero waste)[cite: 1].
-            </div>
-            <div class="step success">
-                <strong>Solusi Terpilih:</strong> Manajemen menolak Alt A dan memilih Kombinasi Fase Bertahap (Alt B dan Alt C)[cite: 1].
-            </div>
-            <div class="step success">
-                <strong>Implementasi Fase 1:</strong> Merekrut 2 supervisor QC independen dan memberi bonus harga 15% untuk petani penyedia Grade A[cite: 1].
-            </div>
-        </div>
-        <div class="slide-image">
-            <!-- Ilustrasi: Truk Distribusi / Logistik -->
-            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" alt="Truk Distribusi Agribisnis">
-        </div>
+    <!-- Slide 3: Matriks Integrasi (Layar Penuh untuk Tabel) -->
+    <div class="slide full-width" id="slide-3">
+        <h2>3. Matriks Integrasi: Subsistem x Fungsi Manajemen</h2>
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th width="15%">Subsistem Agribisnis (Kartasapoetra)</th>
+                    <th width="21%">Perencanaan (Planning)</th>
+                    <th width="21%">Pengorganisasian (Organizing)</th>
+                    <th width="21%">Pengarahan (Directing)</th>
+                    <th width="21%">Pengawasan (Controlling)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="step">
+                    <td><strong>1. Hulu (Input)</strong></td>
+                    <td>Merencanakan kebutuhan benih & nutrisi hidroponik bulanan.[cite: 2]</td>
+                    <td>Membentuk Divisi Kemitraan Lapangan pengadaan sarana.[cite: 2]</td>
+                    <td>Mengarahkan petani mitra dalam penggunaan input standar organik.[cite: 2]</td>
+                    <td>Pemeriksaan mutu benih & nutrisi sebelum dibagikan ke petani.[cite: 2]</td>
+                </tr>
+                <tr class="step">
+                    <td><strong>2. On-Farm (Budidaya)</strong></td>
+                    <td>Menyusun jadwal tanam & estimasi pasokan sayur harian.[cite: 2]</td>
+                    <td>Membagi 45 kelompok tani mitra ke dalam zona binaan.[cite: 2]</td>
+                    <td>Insentif harga +15% untuk petani yang panen sebelum jam 08.00.[cite: 2]</td>
+                    <td>Monitoring suhu panen & penanganan awal hasil petik petani.[cite: 2]</td>
+                </tr>
+                <tr class="step">
+                    <td><strong>3. Off-Farm (Pengolahan)</strong></td>
+                    <td>Menjadwalkan kapasitas pemrosesan gudang Packhouse.[cite: 2]</td>
+                    <td>Membentuk unit khusus Quality Control (QC) independen.[cite: 2]</td>
+                    <td>Pelatihan SOP clean & pack serta pemilahan grade sayur.[cite: 2]</td>
+                    <td>Pengawasan suhu cold room (4°C-7°C) & penurunan reject rate (4.2%).[cite: 2]</td>
+                </tr>
+                <tr class="step">
+                    <td><strong>4. Pemasaran (Hilir)</strong></td>
+                    <td>Menyusun sales forecast bersama peritel Jabodetabek.[cite: 2]</td>
+                    <td>Membentuk Divisi Pemasaran & armada logistik pendingin.[cite: 2]</td>
+                    <td>Membangun kemitraan strategis dengan supermarket & restoran.[cite: 2]</td>
+                    <td>Pelacak GPS & sensor suhu digital truk untuk kepastian on-time delivery.[cite: 2]</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- Slide 4: Evaluasi Hasil -->
+    <!-- Slide 4: Keputusan Manajerial & Solusi -->
     <div class="slide" id="slide-4">
         <div class="slide-content">
-            <h2>4. Evaluasi & Hasil (Setelah 3 Bulan)</h2>
+            <h2>4. Solusi 6 Langkah Keputusan Manajerial (Downey)</h2>
             <div class="step success">
-                <strong>Penurunan Kerusakan:</strong> Tingkat kerusakan (reject rate) di gudang turun drastis dari 18% menjadi 4,2%[cite: 1].
+                <strong>Identifikasi & Alternatif:</strong> Ancaman pemutusan kontrak akibat reject rate 18%[cite: 2]. Alternatif mencakup (A) Investasi Truk mahal, (B) Perbaikan SOP & QC, (C) Olahan Sekunder[cite: 2].
             </div>
             <div class="step success">
-                <strong>Optimalisasi Logistik:</strong> Ketepatan waktu pengiriman (on-time delivery) meningkat dari 72% menjadi 96%[cite: 1].
+                <strong>Analisis & Pilihan:</strong> Memilih penggabungan Alternatif B (Fase Darurat) dan C (Fase Diversifikasi) karena dinilai lebih murah dan cepat memperbaiki akar masalah SDM[cite: 2].
             </div>
             <div class="step success">
-                <strong>Pemulihan Kepercayaan:</strong> Supermarket membatalkan rencana pemutus kontrak dan justru menambah pesanan 20%[cite: 1].
+                <strong>Pelaksanaan:</strong> Merekrut Supervisor QC, terapkan bonus harga 15% untuk panen pagi, & memasang sensor suhu GPS pada truk[cite: 2].
+            </div>
+            <div class="step success">
+                <strong>Evaluasi Hasil Akhir:</strong> Reject rate turun drastis ke 4,2%, on-time delivery naik menjadi 96%, dan peritel menambah pesanan sebesar 20%[cite: 2].
             </div>
         </div>
         <div class="slide-image">
-            <!-- Ilustrasi: Grafik peningkatan / Keberhasilan Bisnis -->
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Grafik Kesuksesan Bisnis">
+            <!-- Ilustrasi: Kesuksesan / Pengiriman tepat waktu -->
+            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" alt="Truk Distribusi">
         </div>
     </div>
 
@@ -253,8 +302,6 @@
     const progressText = document.getElementById('progress-text');
     
     let currentSlide = 0;
-    
-    // Array untuk melacak status "step" yang sedang ditampilkan di tiap slide
     let stepsRevealed = new Array(slides.length).fill(0);
 
     function updateUI() {
@@ -263,17 +310,13 @@
         });
 
         progressText.innerText = `Halaman ${currentSlide + 1} / ${slides.length}`;
-        
-        if (currentSlide === 0 && stepsRevealed[0] === 0) {
-            btnPrev.disabled = true;
-        } else {
-            btnPrev.disabled = false;
-        }
+        btnPrev.disabled = (currentSlide === 0 && stepsRevealed[0] === 0);
 
         const currentSteps = slides[currentSlide].querySelectorAll('.step');
         
         if (stepsRevealed[currentSlide] < currentSteps.length) {
             btnNext.innerText = "Tampilkan Poin";
+            btnNext.disabled = false;
         } else {
             if (currentSlide === slides.length - 1) {
                 btnNext.innerText = "Selesai";
@@ -303,7 +346,6 @@
             stepsRevealed[currentSlide]--;
             const currentSteps = slides[currentSlide].querySelectorAll('.step');
             currentSteps[stepsRevealed[currentSlide]].classList.remove('visible');
-            btnNext.disabled = false; 
         } 
         else if (currentSlide > 0) {
             currentSlide--;
